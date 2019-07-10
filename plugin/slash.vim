@@ -37,7 +37,12 @@ endfunction
 function! s:trailer()
   augroup slash
     autocmd!
-    autocmd CursorMoved,CursorMovedI * set nohlsearch | autocmd! slash
+    let clear_cmd_output = get(g:, 'vim_slash_clear_command_output', 0)
+    if clear_cmd_output == 1
+      autocmd CursorMoved,CursorMovedI * set nohlsearch | echo '' | autocmd! slash
+    else
+      autocmd CursorMoved,CursorMovedI * set nohlsearch | autocmd! slash
+    endif
   augroup END
 
   let seq = foldclosed('.') != -1 ? 'zv' : ''
@@ -107,8 +112,12 @@ inoremap        <plug>(slash-prev)    <nop>
 noremap!        <plug>(slash-nop)     <nop>
 
 cmap <expr> <cr> <sid>wrap("\<cr>")
-map  <expr> n    <sid>wrap('n')
-map  <expr> N    <sid>wrap('N')
+
+if get(g:, 'vim_slash_remap_n', 0) == 1
+  map  <expr> n    <sid>wrap('n')
+  map  <expr> N    <sid>wrap('N')
+endif
+
 map  <expr> gd   <sid>wrap('gd')
 map  <expr> gD   <sid>wrap('gD')
 map  <expr> *    <sid>wrap(<sid>immobile('*'))
