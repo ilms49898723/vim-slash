@@ -25,7 +25,6 @@ function! s:wrap(seq)
     return a:seq
   endif
   silent! autocmd! slash
-  set hlsearch
   return a:seq."\<plug>(slash-trailer)"
 endfunction
 
@@ -49,6 +48,8 @@ function! s:trailer()
       autocmd CursorMoved,CursorMovedI * call anzu#clear_search_status()
     endif
   augroup END
+
+  set hlsearch
 
   let seq = foldclosed('.') != -1 ? 'zv' : ''
   if exists('s:winline')
