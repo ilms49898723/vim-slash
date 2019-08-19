@@ -119,7 +119,7 @@ if get(g:, 'vim_slash_map_silently', 0) == 1
   inoremap <silent>        <plug>(slash-prev)    <nop>
   noremap! <silent>        <plug>(slash-nop)     <nop>
 
-  cmap <silent> <expr> <cr> <sid>wrap("\<cr>")
+  cmap <expr> <cr> <sid>wrap("\<cr>")
 
   if get(g:, 'vim_slash_remap_n', 0) == 1
     map  <silent> <expr> n    <sid>wrap('n')
