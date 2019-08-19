@@ -29,8 +29,9 @@ function! s:wrap(seq)
 endfunction
 
 function! s:immobile(seq)
-  let s:winline = winline()
-  return a:seq."\<plug>(slash-prev)"
+  " let s:winline = winline()
+  " return a:seq."\<plug>(slash-prev)"
+  return a:seq
 endfunction
 
 function! s:trailer()
@@ -110,25 +111,50 @@ function! slash#blink(times, delay)
   return ''
 endfunction
 
-map      <expr> <plug>(slash-trailer) <sid>trailer()
-imap     <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
-cnoremap        <plug>(slash-cr)      <cr>
-noremap         <plug>(slash-prev)    <c-o>
-inoremap        <plug>(slash-prev)    <nop>
-noremap!        <plug>(slash-nop)     <nop>
+if get(g:, 'vim_slash_map_silently', 0) == 1
+  map      <silent> <expr> <plug>(slash-trailer) <sid>trailer()
+  imap     <silent> <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
+  cnoremap <silent>        <plug>(slash-cr)      <cr>
+  noremap  <silent>        <plug>(slash-prev)    <c-o>
+  inoremap <silent>        <plug>(slash-prev)    <nop>
+  noremap! <silent>        <plug>(slash-nop)     <nop>
 
-cmap <expr> <cr> <sid>wrap("\<cr>")
+  cmap <silent> <expr> <cr> <sid>wrap("\<cr>")
 
-if get(g:, 'vim_slash_remap_n', 0) == 1
-  map  <expr> n    <sid>wrap('n')
-  map  <expr> N    <sid>wrap('N')
+  if get(g:, 'vim_slash_remap_n', 0) == 1
+    map  <silent> <expr> n    <sid>wrap('n')
+    map  <silent> <expr> N    <sid>wrap('N')
+  endif
+
+  map  <silent> <expr> gd   <sid>wrap('gd')
+  map  <silent> <expr> gD   <sid>wrap('gD')
+  map  <silent> <expr> *    <sid>wrap(<sid>immobile('*'))
+  map  <silent> <expr> #    <sid>wrap(<sid>immobile('#'))
+  map  <silent> <expr> g*   <sid>wrap(<sid>immobile('g*'))
+  map  <silent> <expr> g#   <sid>wrap(<sid>immobile('g#'))
+  xmap <silent> <expr> *    <sid>wrap(<sid>immobile("y/\<c-r>=<sid>escape(0)\<plug>(slash-cr)\<plug>(slash-cr)"))
+  xmap <silent> <expr> #    <sid>wrap(<sid>immobile("y?\<c-r>=<sid>escape(1)\<plug>(slash-cr)\<plug>(slash-cr)"))
+else
+  map      <expr> <plug>(slash-trailer) <sid>trailer()
+  imap     <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
+  cnoremap        <plug>(slash-cr)      <cr>
+  noremap         <plug>(slash-prev)    <c-o>
+  inoremap        <plug>(slash-prev)    <nop>
+  noremap!        <plug>(slash-nop)     <nop>
+
+  cmap <expr> <cr> <sid>wrap("\<cr>")
+
+  if get(g:, 'vim_slash_remap_n', 0) == 1
+    map  <expr> n    <sid>wrap('n')
+    map  <expr> N    <sid>wrap('N')
+  endif
+
+  map  <expr> gd   <sid>wrap('gd')
+  map  <expr> gD   <sid>wrap('gD')
+  map  <expr> *    <sid>wrap(<sid>immobile('*'))
+  map  <expr> #    <sid>wrap(<sid>immobile('#'))
+  map  <expr> g*   <sid>wrap(<sid>immobile('g*'))
+  map  <expr> g#   <sid>wrap(<sid>immobile('g#'))
+  xmap <expr> *    <sid>wrap(<sid>immobile("y/\<c-r>=<sid>escape(0)\<plug>(slash-cr)\<plug>(slash-cr)"))
+  xmap <expr> #    <sid>wrap(<sid>immobile("y?\<c-r>=<sid>escape(1)\<plug>(slash-cr)\<plug>(slash-cr)"))
 endif
-
-map  <expr> gd   <sid>wrap('gd')
-map  <expr> gD   <sid>wrap('gD')
-map  <expr> *    <sid>wrap(<sid>immobile('*'))
-map  <expr> #    <sid>wrap(<sid>immobile('#'))
-map  <expr> g*   <sid>wrap(<sid>immobile('g*'))
-map  <expr> g#   <sid>wrap(<sid>immobile('g#'))
-xmap <expr> *    <sid>wrap(<sid>immobile("y/\<c-r>=<sid>escape(0)\<plug>(slash-cr)\<plug>(slash-cr)"))
-xmap <expr> #    <sid>wrap(<sid>immobile("y?\<c-r>=<sid>escape(1)\<plug>(slash-cr)\<plug>(slash-cr)"))
