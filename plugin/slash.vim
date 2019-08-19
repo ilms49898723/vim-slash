@@ -43,6 +43,11 @@ function! s:trailer()
     else
       autocmd CursorMoved,CursorMovedI * set nohlsearch | autocmd! slash
     endif
+
+    let clear_anzu_search_status = get(g:, 'vim_slash_clear_anzu_search_status', 0)
+    if clear_anzu_search_status == 1
+      autocmd CursorMoved,CursorMovedI * call anzu#clear_search_status()
+    endif
   augroup END
 
   let seq = foldclosed('.') != -1 ? 'zv' : ''
