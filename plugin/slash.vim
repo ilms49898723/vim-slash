@@ -121,10 +121,8 @@ if get(g:, 'vim_slash_map_silently', 0) == 1
 
   cmap <expr> <cr> <sid>wrap("\<cr>")
 
-  if get(g:, 'vim_slash_remap_n', 0) == 1
-    map  <silent> <expr> n    <sid>wrap('n')
-    map  <silent> <expr> N    <sid>wrap('N')
-  endif
+  map  <silent> <expr> n    <sid>wrap('n')
+  map  <silent> <expr> N    <sid>wrap('N')
 
   map  <silent> <expr> gd   <sid>wrap('gd')
   map  <silent> <expr> gD   <sid>wrap('gD')
@@ -144,10 +142,8 @@ else
 
   cmap <expr> <cr> <sid>wrap("\<cr>")
 
-  if get(g:, 'vim_slash_remap_n', 0) == 1
-    map  <expr> n    <sid>wrap('n')
-    map  <expr> N    <sid>wrap('N')
-  endif
+  map  <expr> n    <sid>wrap('n')
+  map  <expr> N    <sid>wrap('N')
 
   map  <expr> gd   <sid>wrap('gd')
   map  <expr> gD   <sid>wrap('gD')
