@@ -29,6 +29,8 @@ function! s:wrap(seq)
 endfunction
 
 function! s:immobile(seq)
+  let s:winline = winline()
+  let s:pos = getpos('.')
   return a:seq
 endfunction
 
@@ -117,7 +119,7 @@ if get(g:, 'vim_slash_map_silently', 0) == 1
   map      <silent> <expr> <plug>(slash-trailer) <sid>trailer()
   imap     <silent> <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
   cnoremap <silent>        <plug>(slash-cr)      <cr>
-  noremap  <silent>        <plug>(slash-prev)    <c-o>
+  noremap  <silent> <expr> <plug>(slash-prev)    <sid>prev()
   inoremap <silent>        <plug>(slash-prev)    <nop>
   noremap! <silent>        <plug>(slash-nop)     <nop>
 
@@ -138,7 +140,7 @@ else
   map      <expr> <plug>(slash-trailer) <sid>trailer()
   imap     <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
   cnoremap        <plug>(slash-cr)      <cr>
-  noremap         <plug>(slash-prev)    <c-o>
+  noremap  <expr> <plug>(slash-prev)    <sid>prev()
   inoremap        <plug>(slash-prev)    <nop>
   noremap!        <plug>(slash-nop)     <nop>
 
