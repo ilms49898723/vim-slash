@@ -29,8 +29,6 @@ function! s:wrap(seq)
 endfunction
 
 function! s:immobile(seq)
-  " let s:winline = winline()
-  " return a:seq."\<plug>(slash-prev)"
   return a:seq
 endfunction
 
@@ -72,6 +70,10 @@ function! s:trailer_on_leave()
     autocmd InsertLeave * call <sid>trailer()
   augroup END
   return ''
+endfunction
+
+function! s:prev()
+  return getpos('.') == s:pos ? '' : '``'
 endfunction
 
 function! s:escape(backward)
