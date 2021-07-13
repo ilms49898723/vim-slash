@@ -31,7 +31,7 @@ endfunction
 function! s:immobile(seq)
   let s:winline = winline()
   let s:pos = getpos('.')
-  return a:seq
+  return a:seq."\<plug>(slash-prev)"
 endfunction
 
 function! s:trailer()
@@ -130,10 +130,10 @@ if get(g:, 'vim_slash_map_silently', 0) == 1
 
   map  <silent> <expr> gd   <sid>wrap('gd')
   map  <silent> <expr> gD   <sid>wrap('gD')
-  map  <silent> <expr> *    <sid>wrap(<sid>immobile('*'))
-  map  <silent> <expr> #    <sid>wrap(<sid>immobile('#'))
-  map  <silent> <expr> g*   <sid>wrap(<sid>immobile('g*'))
-  map  <silent> <expr> g#   <sid>wrap(<sid>immobile('g#'))
+  map  <silent> <expr> *    <sid>wrap(<sid>immobile('*n'))
+  map  <silent> <expr> #    <sid>wrap(<sid>immobile('#n'))
+  map  <silent> <expr> g*   <sid>wrap(<sid>immobile('g*n'))
+  map  <silent> <expr> g#   <sid>wrap(<sid>immobile('g#n'))
   xmap <silent> <expr> *    <sid>wrap(<sid>immobile("y/\<c-r>=<sid>escape(0)\<plug>(slash-cr)\<plug>(slash-cr)"))
   xmap <silent> <expr> #    <sid>wrap(<sid>immobile("y?\<c-r>=<sid>escape(1)\<plug>(slash-cr)\<plug>(slash-cr)"))
 else
@@ -151,10 +151,10 @@ else
 
   map  <expr> gd   <sid>wrap('gd')
   map  <expr> gD   <sid>wrap('gD')
-  map  <expr> *    <sid>wrap(<sid>immobile('*'))
-  map  <expr> #    <sid>wrap(<sid>immobile('#'))
-  map  <expr> g*   <sid>wrap(<sid>immobile('g*'))
-  map  <expr> g#   <sid>wrap(<sid>immobile('g#'))
+  map  <expr> *    <sid>wrap(<sid>immobile('*n'))
+  map  <expr> #    <sid>wrap(<sid>immobile('#n'))
+  map  <expr> g*   <sid>wrap(<sid>immobile('g*n'))
+  map  <expr> g#   <sid>wrap(<sid>immobile('g#n'))
   xmap <expr> *    <sid>wrap(<sid>immobile("y/\<c-r>=<sid>escape(0)\<plug>(slash-cr)\<plug>(slash-cr)"))
   xmap <expr> #    <sid>wrap(<sid>immobile("y?\<c-r>=<sid>escape(1)\<plug>(slash-cr)\<plug>(slash-cr)"))
 endif
